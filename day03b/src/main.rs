@@ -1,5 +1,3 @@
-#![feature(drain_filter)]
-
 const WIDTH: usize = 12;
 
 pub fn main() {
@@ -12,7 +10,7 @@ pub fn main() {
         .rev()
         .scan(nums.clone(), |oxy, i| {
             let one = oxy.iter().filter(|n| *n & 1 << i > 0).count() >= (oxy.len() + 1) / 2;
-            oxy.drain_filter(|n| (*n & 1 << i > 0) != one);
+            oxy.retain(|n| (*n & 1 << i > 0) == one);
             oxy.first().copied()
         })
         .last()
@@ -22,7 +20,7 @@ pub fn main() {
         .rev()
         .scan(nums, |co2, i| {
             let one = co2.iter().filter(|n| *n & 1 << i > 0).count() >= (co2.len() + 1) / 2;
-            co2.drain_filter(|n| (*n & 1 << i > 0) == one);
+            co2.retain(|n| (*n & 1 << i > 0) != one);
             co2.first().copied()
         })
         .last()

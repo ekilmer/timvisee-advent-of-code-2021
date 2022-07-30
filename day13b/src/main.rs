@@ -1,4 +1,3 @@
-#![feature(stdio_locked)]
 use std::{io::Write, iter::once};
 
 const S: [usize; 2] = [40, 6];
@@ -11,7 +10,7 @@ pub fn main() {
         .map(|(c, i)| (c.as_bytes()[0], i.parse::<i16>().unwrap()))
         .collect::<Vec<_>>();
 
-    std::io::stdout_locked()
+    std::io::stdout().lock()
         .write_all(
             &coords
                 .lines()
