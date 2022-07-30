@@ -1,5 +1,3 @@
-#![feature(array_chunks)]
-
 mod bits;
 
 use bits::Bits;
@@ -8,10 +6,10 @@ pub fn main() {
     let bytes = include_str!("../input.txt")
         .trim()
         .as_bytes()
-        .array_chunks()
-        .map(|&[a, b]| {
-            (((a as char).to_digit(16).unwrap() as u8) << 4)
-                | (b as char).to_digit(16).unwrap() as u8
+        .chunks_exact(2)
+        .map(|chunk| {
+            (((chunk[0] as char).to_digit(16).unwrap() as u8) << 4)
+                | (chunk[1] as char).to_digit(16).unwrap() as u8
         })
         .collect::<Vec<_>>();
     println!("{}", packet(&mut Bits::new(&bytes))[0]);
