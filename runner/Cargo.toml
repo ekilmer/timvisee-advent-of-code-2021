@@ -3,6 +3,7 @@ name = "runner"
 version = "0.1.0"
 authors = ["Tim Visee <3a4fb3964f@sinenomine.email>"]
 edition = "2021"
+rust-version = "1.60"
 
 [dependencies]
 rayon = "1.5"
