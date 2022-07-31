@@ -1,5 +1,3 @@
-#![feature(int_abs_diff)]
-
 use atoi::atoi;
 use nom::*;
 use std::iter;

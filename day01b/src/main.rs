@@ -1,5 +1,3 @@
-#![feature(array_windows)]
-
 pub fn main() {
     println!(
         "{}",
@@ -7,8 +5,8 @@ pub fn main() {
             .lines()
             .map(|n| n.parse().unwrap())
             .collect::<Vec<u16>>()
-            .array_windows()
-            .filter(|[a, _, _, d]| a < d)
+            .windows(4)
+            .filter(|window| window[0] < window[3])
             .count(),
     );
 }

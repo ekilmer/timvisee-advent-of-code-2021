@@ -1,5 +1,3 @@
-#![feature(drain_filter)]
-
 use hashbrown::HashMap;
 
 const ROW: u32 = 0b11111;
@@ -25,15 +23,21 @@ pub fn main() {
         .split(',')
         .map(|n| n.parse().unwrap())
         .filter_map(|n| {
-            boards
-                .drain_filter(|(b, m)| {
-                    b.get(&n)
+            let mut idx = 0;
+            let mut ret = None;
+            while idx < boards.len() {
+                let (ref mut b, ref mut m) = boards[idx];
+                if b.get(&n)
                         .map(|i| *m |= 1 << *i)
                         .map(|_| (0..5).any(|i| *m >> i & COL == COL || *m >> (i * 5) & ROW == ROW))
-                        .unwrap_or(false)
-                })
-                .map(|(b, m)| (b, m, n))
-                .next()
+                        .unwrap_or(false) {
+                    let (b, m) = boards.remove(idx);
+                    ret = Some((b, m, n));
+                } else {
+                    idx += 1;
+                }
+            }
+            ret
         })
         .last()
         .unwrap();
